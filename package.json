@@ -1,19 +1,19 @@
 {
-  "name": "philips-hue",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "package": "rm -rf ./node_modules && npm i --production && zip ./espresso-twitch.zip node_modules/**/* dist/**/* public/**/* manifest.json && npm i"
-  },
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "@types/node-fetch": "^2.5.10",
-    "typescript": "^4.2.4"
-  },
-  "dependencies": {
-    "node-fetch": "^2.6.1"
-  }
+    "name": "philips-hue",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "package": "rm -rf ./node_modules && npm i --production && zip ./espresso-hue.zip node_modules/**/* dist/**/* public/**/* manifest.json && npm i"
+    },
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "devDependencies": {
+        "@types/node-fetch": "^2.5.10",
+        "typescript": "^4.2.4"
+    },
+    "dependencies": {
+        "node-fetch": "^2.6.1"
+    }
 }
