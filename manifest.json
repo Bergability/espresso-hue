@@ -1,0 +1,7 @@
+{
+  "name": "Philips Hue",
+  "slug": "hue",
+  "version": "1.0.0",
+  "load": ["dist/index.js"],
+  "settings": "/hue"
+}

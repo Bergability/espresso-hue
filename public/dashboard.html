@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Philips Hue | Espresso</title>
+    </head>
+    <body>
+        <h1>Philips Hue for Espress!</h1>
+        <p id="connection-status"></p>
+        <p id="button-warning"></p>
+
+        <button id="disconnect" style="display: none">Disconnect Hue</button>
+
+        <script>
+            const status = document.getElementById('connection-status');
+            const button = document.getElementById('button-warning');
+            const disconnect = document.getElementById('disconnect');
+
+            disconnect.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                fetch('/api/hue/auth/revoke', {
+                    method: 'POST',
+                })
+                    .then((res) => {
+                        if (res.ok) window.location.reload();
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                    });
+            });
+
+            fetch('/api/hue')
+                .then((res) => {
+                    res.json()
+                        .then((json) => {
+                            if (json.connected === true) {
+                                status.innerHTML = 'Connected';
+                                disconnect.setAttribute('style', '');
+                                button.remove();
+                            } else {
+                                status.innerHTML = 'Not connected';
+                                button.innerHTML = 'Press the button on your Hue Bridge to connect.';
+                            }
+
+                            if (json.connected === false) {
+                                const interval = setInterval(() => {
+                                    fetch('/api/hue/auth')
+                                        .then((r) => {
+                                            if (r.status === 200) {
+                                                clearInterval(interval);
+                                                status.innerHTML = 'Connected';
+                                                disconnect.setAttribute('style', '');
+                                                button.remove();
+                                            }
+                                        })
+                                        .catch((e) => {
+                                            console.log(e);
+                                        });
+                                }, 2500);
+                            }
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                        });
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
+        </script>
+    </body>
+</html>
